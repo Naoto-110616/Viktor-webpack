@@ -49,7 +49,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_hello_world_button_hello_world_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/hello-world-button/hello-world-button */ \"./src/components/hello-world-button/hello-world-button.js\");\n/* harmony import */ var _components_heading_heading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/heading/heading */ \"./src/components/heading/heading.js\");\n\n\nvar heading = new _components_heading_heading__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nheading.render();\nvar heading2 = new _components_heading_heading__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nheading2.render();\nvar helloWorldButton = new _components_hello_world_button_hello_world_button__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\nhelloWorldButton.render();\n\nif (false) {} else if (true) {\n  console.log(\"development mode\");\n}\n\nhelloWorldButton.methodThatDoesNotExit();\n\n//# sourceURL=webpack://viktor-webpack/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_hello_world_button_hello_world_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/hello-world-button/hello-world-button */ \"./src/components/hello-world-button/hello-world-button.js\");\n/* harmony import */ var _components_heading_heading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/heading/heading */ \"./src/components/heading/heading.js\");\n\n\nvar heading = new _components_heading_heading__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nheading.render();\nvar helloWorldButton = new _components_hello_world_button_hello_world_button__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\nhelloWorldButton.render();\n\nif (false) {} else if (true) {\n  console.log(\"development mode\");\n}\n\nhelloWorldButton.methodThatDoesNotExit();\n\n//# sourceURL=webpack://viktor-webpack/./src/index.js?");
 
 /***/ }),
 
@@ -563,7 +563,7 @@ eval("var logLevel = \"info\";\n\nfunction dummy() {}\n\nfunction shouldLog(leve
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3118afd52cc011a60b43")
+/******/ 		__webpack_require__.h = () => ("82ded1f46f79a17e10ae")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
