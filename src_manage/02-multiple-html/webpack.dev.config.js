@@ -1,19 +1,25 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-	entry: {
-		"hello-world": "./src/hello-world.js",
-		"example-img": "./src/img.js",
-	},
+	entry: "./src/index.js",
 	output: {
-		filename: "[name].[contenthash].js",
+		filename: "bundle.js",
 		path: path.resolve(__dirname, "./dist"),
 		publicPath: "",
 	},
-	mode: "production",
+	mode: "development",
+	devServer: {
+		port: 9000,
+		static: {
+			directory: path.resolve(__dirname, "./dist"),
+		},
+		devMiddleware: {
+			index: "index.html",
+			writeToDisk: true,
+		},
+	},
 	module: {
 		rules: [
 			{
@@ -31,11 +37,11 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: [MiniCssExtractPlugin.loader, "css-loader"],
+				use: ["style-loader", "css-loader"],
 			},
 			{
 				test: /\.scss$/,
-				use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+				use: ["style-loader", "css-loader", "sass-loader"],
 			},
 			{
 				test: /\.js$/,
@@ -55,9 +61,6 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new MiniCssExtractPlugin({
-			filename: "[name].[contenthash].css",
-		}),
 		new CleanWebpackPlugin({
 			cleanOnceBeforeBuildPatterns: [
 				"**/*",
@@ -65,20 +68,9 @@ module.exports = {
 			],
 		}),
 		new HtmlWebpackPlugin({
-			filename: "hello-world.html",
 			title: "Hello World",
-			chunks: ["hello-world"],
-			template: "./src/page-template.hbs",
-			description: "Hello World",
-			minify: false,
-		}),
-		new HtmlWebpackPlugin({
-			filename: "img.html",
-			title: "img",
-			chunks: ["example-img"],
-			template: "./src/page-template.hbs",
-			description: "img",
-			minify: false,
+			template: "./src/index.hbs",
+			description: "some description",
 		}),
 	],
 };
