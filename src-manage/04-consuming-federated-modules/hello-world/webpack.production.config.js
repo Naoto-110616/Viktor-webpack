@@ -1,4 +1,5 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -6,26 +7,23 @@ const { ModuleFederationPlugin } = require("webpack").container;
 module.exports = {
 	entry: "./src/hello-world.js",
 	output: {
-		filename: "[name].bundle.js",
+		filename: "[name].[contenthash].js",
 		path: path.resolve(__dirname, "./dist"),
 		publicPath: "http://localhost:9001/",
 	},
-	mode: "development",
-	devServer: {
-		port: 9001,
-		static: {
-			directory: path.resolve(__dirname, "./dist"),
-		},
-		devMiddleware: {
-			index: "hello-world.html",
-			writeToDisk: true,
+	mode: "production",
+	optimization: {
+		splitChunks: {
+			chunks: "all",
+			minSize: 10000,
+			automaticNameDelimiter: "_",
 		},
 	},
 	module: {
 		rules: [
 			{
 				test: /\.scss$/,
-				use: ["style-loader", "css-loader", "sass-loader"],
+				use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
 			},
 			{
 				test: /\.js$/,
@@ -45,11 +43,14 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new MiniCssExtractPlugin({
+			filename: "[name].[contenthash].css",
+		}),
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			filename: "hello-world.html",
 			title: "Hello world",
-			description: "Hello world",
+			description: "some description",
 			template: "src/page-template.hbs",
 		}),
 		new ModuleFederationPlugin({

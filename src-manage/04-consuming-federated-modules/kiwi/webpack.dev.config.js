@@ -4,25 +4,29 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = {
-	entry: "./src/hello-world.js",
+	entry: "./src/kiwi.js",
 	output: {
 		filename: "[name].bundle.js",
 		path: path.resolve(__dirname, "./dist"),
-		publicPath: "http://localhost:9001/",
+		publicPath: "",
 	},
 	mode: "development",
 	devServer: {
-		port: 9001,
+		port: 9002,
 		static: {
 			directory: path.resolve(__dirname, "./dist"),
 		},
 		devMiddleware: {
-			index: "hello-world.html",
+			index: "kiwi.html",
 			writeToDisk: true,
 		},
 	},
 	module: {
 		rules: [
+			{
+				test: /\.(png|jpg)$/,
+				use: ["file-loader"],
+			},
 			{
 				test: /\.scss$/,
 				use: ["style-loader", "css-loader", "sass-loader"],
@@ -34,7 +38,6 @@ module.exports = {
 					loader: "babel-loader",
 					options: {
 						presets: ["@babel/env"],
-						plugins: ["@babel/plugin-proposal-class-properties"],
 					},
 				},
 			},
@@ -47,17 +50,15 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			filename: "hello-world.html",
-			title: "Hello world",
-			description: "Hello world",
+			filename: "kiwi.html",
+			title: "Kiwi",
+			description: "Kiwi",
 			template: "src/page-template.hbs",
 		}),
 		new ModuleFederationPlugin({
-			name: "HelloWorldApp",
-			filename: "remoteEntry.js",
-			exposes: {
-				"./HelloWorldButton":
-					"./src/components/hello-world-button/hello-world-button.js",
+			name: "KiwiApp",
+			remotes: {
+				HelloWorldApp: "HelloWorldApp@http://localhost:9001/remoteEntry.js",
 			},
 		}),
 	],
