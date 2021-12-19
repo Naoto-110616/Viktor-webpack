@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = {
-	entry: "./src/dashboard.js",
+	entry: "./src/hello-world.js",
 	output: {
 		filename: "[name].[contenthash].js",
 		path: path.resolve(__dirname, "./dist"),
-		publicPath: "http::/localhost:9000/",
+		publicPath: "http://localhost:9001/",
 	},
 	mode: "production",
 	optimization: {
@@ -22,14 +22,23 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.scss$/,
+				use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+			},
+			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
 					options: {
 						presets: ["@babel/env"],
+						plugins: ["@babel/plugin-proposal-class-properties"],
 					},
 				},
+			},
+			{
+				test: /\.hbs$/,
+				use: ["handlebars-loader"],
 			},
 		],
 	},
@@ -39,14 +48,19 @@ module.exports = {
 		}),
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			filename: "dashboard.html",
-			title: "Dashboard",
+			filename: "hello-world.html",
+			title: "Hello world",
+			description: "some description",
+			template: "src/page-template.hbs",
 		}),
 		new ModuleFederationPlugin({
-			name: "App",
-			remotes: {
-				HelloWorldApp: "HelloWorldApp@http://localhost:9001/remoteEntry.js",
-				KiwiApp: "KiwiApp@http://localhost:9002/remoteEntry.js",
+			name: "HelloWorldApp",
+			filename: "remoteEntry.js",
+			exposes: {
+				"./HelloWorldButton":
+					"./src/components/hello-world-button/hello-world-button.js",
+				"./HelloWorldPage":
+					"./src/components/hello-world-page/hello-world-page.js",
 			},
 		}),
 	],
